@@ -104,25 +104,25 @@ public class MyVisitor extends LuaBaseVisitor<String> {
             }
             return tree;
         } else if (tk.equals("for")) {
-            String tree = ":For ";
+            String tree = "";
             if (ctx.namelist() != null) { //generic for
+                tree += ":Forgen ";
                 tree += visitNamelist(ctx.namelist());
                 tree += ", " + visitExplist(ctx.explist());
-            } else if (ctx.exp(0) != null && ctx.exp(1) != null) { //numeric for
+            } else  { //numeric for
+                tree += "Fornum ";
                 System.out.println("For " + ctx.getChildCount() + " " + ctx.getText());
                 tree += " {:Id " + ctx.getChild(1).getText() + "}, ";
-                tree += visitExp(ctx.exp(0)) + ", " + visitExp(ctx.exp(1));
+                tree += visitExp(ctx.e1) + ", " + visitExp(ctx.e2);
                 if (ctx.exp(2) != null)
                     tree += ", " + visitExp(ctx.exp(2)); 
-            } else {
-                tree += " InvalidFor";
-            }
+            } 
             return tree + ", " + visitBlock(ctx.block(0));
         } else if (tk.equals("function")) {
             return ":Function " + visitFuncname(ctx.funcname()) + ", " + visitFuncbody(ctx.funcbody());
         } else if (tk.equals("local")) {
             if (ctx.namelist() != null) {
-                String tree = ":Set " + visitNamelist(ctx.namelist());
+                String tree = ":LocalSet " + visitNamelist(ctx.namelist());
                 if (ctx.explist() != null)
                     tree += visitExplist(ctx.explist());
                 return tree;

@@ -57,7 +57,7 @@ stat
     | 'while' exp 'do' block 'end'
     | 'repeat' block 'until' exp
     | 'if' exp 'then' block ('elseif' exp 'then' block)* ('else' block)? 'end'
-    | 'for' NAME '=' exp ',' exp (',' exp)? 'do' block 'end'
+    | 'for' NAME '=' e1=exp ',' e2=exp (',' e3=exp)? 'do' block 'end'
     | 'for' namelist 'in' explist 'do' block 'end'
     | 'function' funcname funcbody
     | 'local' 'function' NAME funcbody
